@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growth Merchandiser Portfolio: Kim Dongjin</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #F8FAFC;
+            color: #0F172A;
+        }
+
+        /* Chart Container Styles */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%; 
+            height: 320px;    
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        @media (min-width: 1024px) {
+            .chart-container {
+                height: 360px; 
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94A3B8;
+            border-radius: 3px;
+        }
+
+        /* Card Hover Effects */
+        .stat-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-left-color: #1E40AF;
+        }
+
+        /* Resume Section Styles */
+        .resume-section {
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .profile-img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            object-fit: cover;
+            aspect-ratio: 3/4;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 1.5rem;
+            border-left: 2px solid #E2E8F0;
+            padding-bottom: 2rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -0.35rem;
+            top: 0.25rem;
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            background-color: #3B82F6;
+            border: 2px solid #fff;
+        }
+        .timeline-item:last-child {
+            border-left: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <span class="bg-blue-800 text-white font-black px-2 py-1 text-lg rounded">MD</span>
+                    <span class="font-bold text-xl tracking-tight text-gray-900">Kim Dongjin</span>
+                </div>
+                <div class="hidden md:flex space-x-8 text-sm font-medium">
+                    <a href="#resume" class="text-gray-500 hover:text-blue-800 transition">이력서 (Resume)</a>
+                    <a href="#dashboard" class="text-gray-500 hover:text-blue-800 transition">핵심 성과</a>
+                    <a href="#rebranding" class="text-gray-500 hover:text-blue-800 transition">시장 분석</a>
+                    <a href="#engineering" class="text-gray-500 hover:text-blue-800 transition">상품 설계</a>
+                    <a href="#field-research" class="text-gray-500 hover:text-blue-800 transition">현장 검증</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Resume / Profile Section -->
+    <section id="resume" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-black text-gray-900">About Me</h2>
+                <p class="text-gray-500 mt-2">데이터와 실행력으로 성과를 증명하는 4년 차 Growth MD</p>
+            </div>
+            
+            <div class="resume-section p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                    <!-- Left Column: Photo & Contact & Education -->
+                    <div class="lg:col-span-4 space-y-8">
+                        <!-- Profile Image -->
+                        <div class="relative shadow-lg rounded-lg overflow-hidden border border-gray-100">
+                            <!-- User Uploaded Image -->
+                            <img src="http://googleusercontent.com/image_generation_content/0" alt="Kim Dongjin Profile" class="profile-img">
+                        </div>
+
+                        <!-- Contact Info -->
+                        <div class="space-y-3 text-sm">
+                            <div class="flex items-center gap-3 text-gray-700">
+                                <i class="fas fa-envelope text-blue-600 w-5"></i>
+                                <span>rlaehdwls96@gmail.com</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-gray-700">
+                                <i class="fas fa-phone text-blue-600 w-5"></i>
+                                <span>010-3234-4911</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-gray-700">
+                                <i class="fas fa-map-marker-alt text-blue-600 w-5"></i>
+                                <span>경기도 고양시 일산서구</span>
+                            </div>
+                        </div>
+
+                        <!-- Education -->
+                        <div>
+                            <h3 class="font-bold text-gray-900 text-lg mb-4 border-b pb-2">학력 (Education)</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="font-bold text-gray-800">서울사이버대학교</div>
+                                    <div class="text-sm text-gray-600">온라인커머스 학사 (졸업)</div>
+                                    <div class="text-xs text-gray-400">2020.03 ~ 2021.07</div>
+                                    <div class="text-xs text-blue-600 mt-1">GPA: 3.28/4.5</div>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-gray-800">두원공과대학교</div>
+                                    <div class="text-sm text-gray-600">컴퓨터공학 전문학사 (졸업)</div>
+                                    <div class="text-xs text-gray-400">2015.03 ~ 2019.02</div>
+                                    <div class="text-xs text-blue-600 mt-1">CS 기초 및 데이터베이스 활용</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Certifications -->
+                        <div>
+                            <h3 class="font-bold text-gray-900 text-lg mb-4 border-b pb-2">자격 및 교육</h3>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li>• <strong>정보처리산업기사</strong> (한국산업인력공단)</li>
+                                <li>• <strong>SW/IT 전문인재 양성과정</strong> (1,400시간 수료)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Intro & Work & Tools -->
+                    <div class="lg:col-span-8 space-y-10">
+                        <!-- Self Intro -->
+                        <div>
+                            <h3 class="font-bold text-gray-900 text-2xl mb-4">"기술(Tech)을 아는 기획자(Merchant)"</h3>
+                            <p class="text-gray-600 leading-relaxed text-sm lg:text-base">
+                                단순히 '감'에 의존하는 기획을 넘어, <strong>데이터로 근거를 마련하고 공학적으로 해결책을 설계</strong>하는 4년 차 MD입니다. 
+                                컴퓨터공학 전공을 살려 Python과 SQL 구조를 이해하고, <strong>AI 분석 도구와 시각화 툴(Tableau, Amplitude)</strong>을 활용해 
+                                빠르고 정확하게 의사결정을 내립니다. 50년 레거시 브랜드의 리브랜딩을 통해 2030 매출 비중을 확대하고, 
+                                이익률을 방어한 실무 경험을 보유하고 있습니다.
+                            </p>
+                        </div>
+
+                        <!-- Experience Timeline -->
+                        <div>
+                            <h3 class="font-bold text-gray-900 text-lg mb-6 border-b pb-2">경력 사항 (Work Experience)</h3>
+                            <div class="ml-2">
+                                <!-- Experience 1 -->
+                                <div class="timeline-item">
+                                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2">
+                                        <div class="font-bold text-lg text-gray-900">신영와코루 (VENUS)</div>
+                                        <div class="text-sm text-blue-600 font-medium">2022.05 ~ 재직중 (상품기획팀)</div>
+                                    </div>
+                                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                        <ul class="list-disc list-outside ml-4 space-y-2 text-sm text-gray-700">
+                                            <li><strong>2026 S/S 시즌 기획 총괄:</strong> 리브랜딩 전략 수립 및 S-FIT 라인업 런칭</li>
+                                            <li><strong>상품 효율(SKU) 최적화:</strong> 세그먼트 분석을 통한 비효율 품목 축소 및 집중</li>
+                                            <li><strong>원가 엔지니어링:</strong> TPE 신소재 도입 및 공정 단순화로 제조 원가 -8.5% 절감</li>
+                                            <li><strong>데이터 검증:</strong> 게릴라 A/B 테스트 및 코호트 분석을 통한 고객 행동 추적</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- Experience 2 (Updated: Management Support) -->
+                                <div class="timeline-item">
+                                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2">
+                                        <div class="font-bold text-lg text-gray-900">CJ 프레시원 (CJ Freshway)</div>
+                                        <div class="text-sm text-gray-500 font-medium">2019.06 ~ 2021.04 (경영지원팀)</div>
+                                    </div>
+                                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                        <ul class="list-disc list-outside ml-4 space-y-2 text-sm text-gray-700">
+                                            <li><strong>영업 지표 관리:</strong> 전사 매출/손익 데이터 취합 및 영업 KPI 분석 지원</li>
+                                            <li><strong>프로세스 최적화:</strong> 영업 현장 이슈 대응 및 사내 ERP 시스템 개선 제안</li>
+                                            <li><strong>재고/채권 관리:</strong> SAP 시스템을 활용한 식자재 재고 수불 및 미수 채권 회수 지원</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pros & Cons -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-blue-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-blue-900 mb-2">성격의 장점 (Strength)</h4>
+                                <ul class="space-y-2 text-sm text-blue-800">
+                                    <li><i class="fas fa-check-circle mr-2"></i><strong>분석적 문제해결:</strong> 막연한 문제를 데이터로 쪼개어(Segment) 구체적인 원인을 찾습니다.</li>
+                                    <li><i class="fas fa-check-circle mr-2"></i><strong>협업 조율 능력:</strong> 공장, 디자인팀, 영업팀의 언어를 통역하여 합의점을 도출합니다.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-100 p-5 rounded-lg">
+                                <h4 class="font-bold text-gray-900 mb-2">보완점 (Weakness)</h4>
+                                <ul class="space-y-2 text-sm text-gray-700">
+                                    <li><i class="fas fa-exclamation-circle mr-2"></i><strong>신중함과 속도:</strong> 분석에 몰입하는 경향이 있어, <strong>'빠른 실행(Agile)'</strong>과 A/B 테스트로 속도감을 높이고 있습니다.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Tech Stack (Updated) -->
+                        <div>
+                            <h3 class="font-bold text-gray-900 text-lg mb-4 border-b pb-2">사용 툴 (Tech & Tools)</h3>
+                            <div class="space-y-4">
+                                <!-- Office & Basic -->
+                                <div>
+                                    <span class="text-xs font-bold text-gray-500 uppercase mb-1 block">Office & Collaboration</span>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-white border rounded text-sm text-gray-700 font-medium shadow-sm">Excel (Advanced)</span>
+                                        <span class="px-3 py-1 bg-white border rounded text-sm text-gray-700 font-medium shadow-sm">PowerPoint</span>
+                                        <span class="px-3 py-1 bg-white border rounded text-sm text-gray-700 font-medium shadow-sm">Word</span>
+                                        <span class="px-3 py-1 bg-white border rounded text-sm text-gray-700 font-medium shadow-sm">Notion</span>
+                                    </div>
+                                </div>
+                                <!-- Analytics -->
+                                <div>
+                                    <span class="text-xs font-bold text-gray-500 uppercase mb-1 block">Data & Analytics</span>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-blue-50 border border-blue-200 rounded text-sm text-blue-800 font-medium shadow-sm"><i class="fas fa-chart-pie mr-1"></i> Tableau</span>
+                                        <span class="px-3 py-1 bg-blue-50 border border-blue-200 rounded text-sm text-blue-800 font-medium shadow-sm"><i class="fas fa-cloud mr-1"></i> Salesforce</span>
+                                        <span class="px-3 py-1 bg-blue-50 border border-blue-200 rounded text-sm text-blue-800 font-medium shadow-sm">GA4</span>
+                                        <span class="px-3 py-1 bg-blue-50 border border-blue-200 rounded text-sm text-blue-800 font-medium shadow-sm">Amplitude</span>
+                                    </div>
+                                </div>
+                                <!-- AI & Dev -->
+                                <div>
+                                    <span class="text-xs font-bold text-gray-500 uppercase mb-1 block">AI & Development (Vibe Coding)</span>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-indigo-50 border border-indigo-200 rounded text-sm text-indigo-800 font-medium shadow-sm"><i class="fas fa-robot mr-1"></i> NotebookLM</span>
+                                        <span class="px-3 py-1 bg-indigo-50 border border-indigo-200 rounded text-sm text-indigo-800 font-medium shadow-sm">Antigravity</span>
+                                        <span class="px-3 py-1 bg-indigo-50 border border-indigo-200 rounded text-sm text-indigo-800 font-medium shadow-sm"><i class="fas fa-code mr-1"></i> VS Code</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Hero / KPI Dashboard -->
+    <section id="dashboard" class="py-16 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-bold uppercase tracking-wide mb-4">
+                    Performance Highlights
+                </div>
+                <h2 class="text-3xl md:text-4xl font-black text-gray-900 mb-6 tracking-tight">
+                    "실현 가능한 데이터로 성과를 만듭니다"
+                </h2>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- KPI 1 -->
+                <div class="stat-card bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-bold text-gray-400 uppercase">정상 판매율 (STR)</span>
+                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    </div>
+                    <div class="text-4xl font-black text-gray-900">78<span class="text-2xl text-gray-400">%</span></div>
+                    <p class="text-xs text-green-700 font-medium mt-2 bg-green-50 inline-block px-2 py-1 rounded">
+                        ▲ 목표 초과 달성
+                    </p>
+                    <p class="text-xs text-gray-400 mt-2 border-t pt-2">
+                        *리오더 대응이 가능한 최적의 재고 효율 구간
+                    </p>
+                </div>
+
+                <!-- KPI 2 -->
+                <div class="stat-card bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-bold text-gray-400 uppercase">2030 유입 증가</span>
+                        <span class="w-2 h-2 rounded-full bg-pink-500"></span>
+                    </div>
+                    <div class="text-4xl font-black text-gray-900">+6.5<span class="text-2xl text-gray-400">%p</span></div>
+                    <p class="text-xs text-pink-700 font-medium mt-2 bg-pink-50 inline-block px-2 py-1 rounded">
+                        Organic Growth
+                    </p>
+                    <p class="text-xs text-gray-400 mt-2 border-t pt-2">
+                        *마케팅 의존 없이 상품 기획력으로 만든 순수 유입
+                    </p>
+                </div>
+
+                <!-- KPI 3 -->
+                <div class="stat-card bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-bold text-gray-400 uppercase">원가 절감 (Cost)</span>
+                        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                    </div>
+                    <div class="text-4xl font-black text-gray-900">-8.5<span class="text-2xl text-gray-400">%</span></div>
+                    <p class="text-xs text-blue-700 font-medium mt-2 bg-blue-50 inline-block px-2 py-1 rounded">
+                        품질 유지 (Quality First)
+                    </p>
+                    <p class="text-xs text-gray-400 mt-2 border-t pt-2">
+                        *소재 국산화 및 공정 최적화 엔지니어링
+                    </p>
+                </div>
+
+                <!-- KPI 4 -->
+                <div class="stat-card bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-bold text-gray-400 uppercase">데이터 활용</span>
+                        <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+                    </div>
+                    <div class="text-2xl font-black text-gray-900 mt-2">Amplitude<br><span class="text-xl text-gray-400">& Tableau</span></div>
+                    <p class="text-xs text-indigo-700 font-medium mt-2 bg-indigo-50 inline-block px-2 py-1 rounded">
+                        Intuitive Visualization
+                    </p>
+                    <p class="text-xs text-gray-400 mt-2 border-t pt-2">
+                        *AI 분석 툴을 활용한 직관적 시각화
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Project 1: Market Sensing -->
+    <section id="rebranding" class="py-20 bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <div class="lg:col-span-1">
+                    <span class="text-pink-600 font-bold tracking-widest text-xs uppercase">Case Study 01</span>
+                    <h2 class="text-3xl font-black text-gray-900 mt-2 mb-6">시장 트렌드 분석 (Market Sensing)</h2>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        <strong>Insight:</strong> 20대 타겟 리뷰 5천 건 분석 결과, '보정'이라는 단어에 대한 거부감 발견.<br>
+                        <strong>Concept:</strong> '감추는 속옷'에서 '드러내는 핏'으로 패러다임 전환.<br>
+                        <strong>Result:</strong> S-FIT 라인업 출시 후 2030 세대 매출 비중 유의미한 상승.
+                    </p>
+                </div>
+                
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-gray-800">검색 트렌드 추이 (Keyword Trend)</h3>
+                            <div class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Source: Internal/External Keyword Mix</div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Project 2: Engineering (Balanced Data) -->
+    <section id="engineering" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12 text-center max-w-3xl mx-auto">
+                <span class="text-blue-600 font-bold tracking-widest text-xs uppercase">Case Study 02</span>
+                <h2 class="text-3xl font-black text-gray-900 mt-2">데이터 기반 상품 설계 (Engineering)</h2>
+                <p class="text-gray-600 mt-4">
+                    AI 텍스트 마이닝을 통해 반품 사유를 세분화(Segmentation)했습니다.<br>
+                    가격 저항도 높았지만, <strong>'미세한 압박감'이 결정적 이탈(Churn) 요인</strong>임을 확인하고 공학적 개선을 진행했습니다.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- VOC Analysis (Balanced) -->
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-md">
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">고객 불만 요인 분석 (VOC)</h3>
+                    <p class="text-xs text-gray-500 mb-6">반품/불만족 키워드 형태소 분석 빈도</p>
+                    <div class="chart-container">
+                        <canvas id="vocChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Cost Efficiency -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-md text-white">
+                    <h3 class="text-lg font-bold text-white mb-2">설계 개선 성과</h3>
+                    <p class="text-xs text-gray-400 mb-6">TPE 몰드 변경 및 공정 최적화 성과</p>
+                    <div class="chart-container">
+                        <canvas id="costChart"></canvas>
+                    </div>
+                    <div class="flex justify-between mt-6 px-4 border-t border-gray-700 pt-4">
+                        <div class="text-center">
+                            <div class="text-xs text-gray-400">제조 원가 (Cost)</div>
+                            <div class="text-xl font-bold text-blue-400">-8.5%</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-xs text-gray-400">반품률 (Return Rate)</div>
+                            <div class="text-xl font-bold text-green-400">Stable</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Project 3: Field A/B Test (Guerrilla Style - Updated) -->
+    <section id="field-research" class="py-20 bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                
+                <!-- Field Research Story -->
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                        <span class="bg-indigo-100 text-indigo-700 p-2 rounded-lg mr-3">
+                            📊
+                        </span>
+                        게릴라 현장 A/B 테스트
+                    </h3>
+                    <p class="text-gray-600 mb-6 text-sm leading-relaxed">
+                        거창한 시스템 도입을 기다리기보다 <strong>현장 검증</strong>을 택했습니다. 
+                        매장에 직접 방문하여 <strong>QR 코드를 활용한 A/B 테스트</strong>를 진행했고, 
+                        수집된 데이터는 <strong>Amplitude</strong>와 <strong>Tableau</strong> 개념을 적용한 퍼널(Funnel) 분석으로 인사이트를 도출했습니다.
+                    </p>
+                    
+                    <div class="bg-white p-4 rounded-lg border border-gray-200 mb-6">
+                        <h4 class="font-bold text-gray-800 text-sm mb-2">🧪 테스트 시나리오</h4>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li><strong>Group A (대조군):</strong> 기본 피팅 서비스 제공</li>
+                            <li><strong>Group B (실험군):</strong> 체형별 착용 가이드 + QR 사이즈 체감 설문 제공</li>
+                        </ul>
+                    </div>
+
+                    <ul class="space-y-3 text-sm text-gray-600 mb-8">
+                        <li class="flex items-start">
+                            <span class="text-blue-500 mr-2">✓</span>
+                            <span><strong>발견(Finding):</strong> "사이즈가 작다"는 의견의 60%는 실제 사이즈 문제가 아닌 '착용법 미숙'에서 기인함.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-500 mr-2">✓</span>
+                            <span><strong>개선(Action):</strong> 상품 스펙 수정 대신 '피팅 가이드 태그' 부착으로 솔루션 변경 -> 반품률 방어 성공.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Survey Result Visualization -->
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 text-center">현장 고객 퍼널 분석 (Funnel View)</h3>
+                    
+                    <!-- HTML Visualization -->
+                    <div class="space-y-2">
+                        <!-- Step 1 -->
+                        <div class="relative h-12 bg-indigo-50 rounded flex items-center px-4 border-l-4 border-indigo-200">
+                            <div class="w-full flex justify-between text-indigo-900 text-sm font-medium">
+                                <span>방문 고객 (Total Visitors)</span>
+                                <span>300명 (Sample)</span>
+                            </div>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="relative h-12 bg-indigo-100 rounded flex items-center px-4 mx-2 border-l-4 border-indigo-400">
+                            <div class="w-full flex justify-between text-indigo-900 text-sm font-medium">
+                                <span>QR 설문 참여 (Scanned)</span>
+                                <span>145명 (48%)</span>
+                            </div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="relative h-12 bg-indigo-600 rounded flex items-center px-4 mx-6 shadow-md border-l-4 border-indigo-800">
+                            <div class="w-full flex justify-between text-white text-sm font-bold">
+                                <span>유효 인사이트 (Actionable)</span>
+                                <span>98건 (Insight)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex gap-3">
+                        <div class="flex-1 bg-gray-50 p-3 rounded text-center border border-gray-100">
+                            <div class="text-xs text-gray-500">Visualization</div>
+                            <div class="font-bold text-blue-600"><i class="fas fa-chart-line mr-1"></i> Tableau</div>
+                        </div>
+                        <div class="flex-1 bg-gray-50 p-3 rounded text-center border border-gray-100">
+                            <div class="text-xs text-gray-500">Analysis Logic</div>
+                            <div class="font-bold text-blue-400"><i class="fas fa-filter mr-1"></i> Amplitude</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-center md:text-left">
+                <div class="text-white font-black text-2xl mb-1">Growth via Data</div>
+                <p class="text-sm text-gray-500">
+                    AI 도구 활용 능력과 현장 실행력을 갖춘 4년 차 MD,<br>
+                    김동진입니다.
+                </p>
+            </div>
+            <div class="flex flex-col items-center md:items-end gap-1">
+                <span class="text-white font-bold text-lg">김동진 (Dongjin Kim)</span>
+                <span class="text-sm">rlaehdwls96@gmail.com</span>
+                <div class="flex gap-2 mt-2">
+                    <span class="text-xs bg-gray-800 px-2 py-1 rounded border border-gray-700">정보처리산업기사</span>
+                    <span class="text-xs bg-blue-900 text-blue-100 px-2 py-1 rounded border border-blue-800">AI Tool Fluent</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chart Logic -->
+    <script>
+        Chart.defaults.font.family = "'Noto Sans KR', sans-serif";
+        Chart.defaults.color = '#64748B';
+        
+        const commonTooltip = {
+            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+            padding: 12,
+            titleFont: { size: 13 },
+            bodyFont: { size: 12 },
+            cornerRadius: 4,
+            displayColors: false
+        };
+
+        // 1. Trend Chart (Market Sensing)
+        new Chart(document.getElementById('trendChart'), {
+            type: 'line',
+            data: {
+                labels: ['23.1Q', '23.3Q', '24.1Q', '24.3Q', '25.1Q', '25.3Q'],
+                datasets: [
+                    {
+                        label: '기존 키워드 (보정/압박)',
+                        data: [100, 95, 88, 80, 72, 65], // Slower decline (realistic)
+                        borderColor: '#94A3B8',
+                        borderDash: [5, 5],
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        tension: 0.4
+                    },
+                    {
+                        label: '신규 트렌드 (핏/자연스러움)',
+                        data: [40, 45, 55, 70, 85, 98], // Organic growth curve
+                        borderColor: '#BE185D',
+                        backgroundColor: 'rgba(190, 24, 93, 0.05)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#BE185D',
+                        fill: true,
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, position: 'top', labels: { usePointStyle: true, boxWidth: 6 } },
+                    tooltip: commonTooltip
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { display: false }
+                }
+            }
+        });
+
+        // 2. VOC Analysis (Balanced Realism)
+        new Chart(document.getElementById('vocChart'), {
+            type: 'bar',
+            data: {
+                labels: [['와이어 압박감', '(불편함)'], ['높은 가격', '(구매 저항)'], ['디자인', '(올드함)'], ['사이즈 이슈', '(핏)']],
+                datasets: [{
+                    label: '빈도(Frequency)',
+                    data: [580, 420, 250, 210], // Pressure is #1 but Price is also significant
+                    backgroundColor: [
+                        '#BE185D', // Main Pain Point
+                        '#64748B', // Price
+                        '#94A3B8', 
+                        '#94A3B8'
+                    ],
+                    borderRadius: 4,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: commonTooltip
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 3. Cost Chart (Realistic Saving)
+        new Chart(document.getElementById('costChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Before', 'After'],
+                datasets: [
+                    {
+                        label: '제조 원가 지수',
+                        data: [100, 91.5], // -8.5% (Realistic)
+                        backgroundColor: '#3B82F6',
+                        borderRadius: 4
+                    },
+                    {
+                        label: '반품률 지수',
+                        data: [100, 95], // Slightly improved (-5% relative)
+                        backgroundColor: '#1E293B',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { boxWidth: 10 } },
+                    tooltip: commonTooltip
+                },
+                scales: {
+                    y: { display: false, beginAtZero: true },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
