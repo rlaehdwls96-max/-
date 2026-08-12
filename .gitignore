@@ -1,5 +1,7 @@
 # 시크릿
 .env
+credentials.json
+token.json
 
 # 생성되는 DB/스테이징 산출물 (원본 데이터는 회사 자료라 커밋하지 않음)
 data/warehouse.db

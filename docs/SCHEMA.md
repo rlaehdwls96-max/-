@@ -30,6 +30,21 @@ project_id, source_id)만 맞춰두고, `v_activity_union` 뷰에서 필요할 �
 - PDF: `pdfplumber`로 페이지별 표를 추출해 세로로 이어 붙임. 표가 없는(스캔 이미지)
   PDF는 별도 OCR이 필요하며 현재 범위 밖 — 에러 메시지로 명확히 안내하도록 처리.
 
+## 메일 인사이트: 아카이빙 시스템 vs Gmail 직접 연동
+`mail_ingest.py`(아카이빙 시스템 export 흡수)와 `gmail_pull.py`(Gmail API 직접 수집) 두
+경로 모두 `data/raw/mail/*.parsed.json`으로 떨어지고, 이후 파이프라인은 경로를 구분하지
+않습니다. 다만 `gmail_pull.py`가 채우는 summary는 Gmail의 본문 미리보기(snippet)일 뿐
+사람이 정제한 인사이트가 아니므로, 정말 의미 있는 요약이 필요하면 아카이빙 시스템 쪽
+데이터를 우선하는 게 맞습니다. Gmail 경로는 "라벨만 붙여둔 메일을 빠르게 웨어하우스에
+넣고 싶을 때"용 보조 수단입니다.
+
+## 전처리(preprocess.py)를 staging_to_gold와 분리한 이유
+raw_to_staging이 만든 CSV를 바로 gold에 적재하면, 실제 원본에 흔한 결측치(수량 미기재
+등)가 DB의 NOT NULL 제약과 충돌해 파이프라인 전체가 죽는다. 그래서 "판단(버릴지 말지)"과
+"적재"를 분리했다: preprocess.py가 필수값 결측/숫자 변환 실패 행을 걸러 사유와 함께
+data/staging/rejected/*.csv 로 격리하고, staging_to_gold.py는 이미 검증된 데이터만
+받는다는 전제로 단순하게 유지된다. 검증 규칙이 늘어나도 preprocess.py 한 곳만 고치면 됨.
+
 ## 다음에 결정할 것
 - ERP/CRM 실제 파일 확보 후 `COLUMN_MAP` 확정
 - 노션 "일일 업무" DB의 실제 프로퍼티명 확인 후 `raw_to_staging.stage_notion_daily_work()`의
