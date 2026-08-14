@@ -418,28 +418,43 @@ with tab3:
     st.markdown("---")
     st.subheader("세트비 (브라·팬티 세트 판매/재고 비중)")
 
-    set_ratio = db.get_dash_set_ratio(db_path)
-    if set_ratio.empty:
-        st.info(
-            "dash_set_ratio 테이블이 없습니다. REPEAT_PT.xlsx의 'BR SET비 계산' 시트가 "
-            "있어야 이 표가 채워집니다 (pipelines/parse_repeat.py 실행 필요)."
-        )
+    st.markdown("---")
+    st.markdown("**세트 조회 (BR ↔ PT 품번 대조)**")
+    st.caption(
+        "품번을 선택하면 코어 번호(접두사 3글자 제거 후 숫자 블록)가 같은 "
+        "반대 브랜드 품번을 찾아 비교합니다. 매칭되는 품번이 없으면 단품으로 판단합니다."
+    )
+    all_skus = sorted(repeat_wide["품번"].dropna().astype(str).unique().tolist())
+    if not all_skus:
+        st.info("조회할 품번이 없습니다.")
     else:
-        for group_id, grp in set_ratio.groupby("세트그룹"):
-            br_rows = grp[grp["품번"].astype(str).str.startswith("WBR")]
-            pt_rows = grp[~grp["품번"].astype(str).str.startswith("WBR")]
-            title_skus = " / ".join(grp["품번"].astype(str).unique().tolist())
-            with st.expander(f"세트 {group_id}: {title_skus}"):
-                show = grp[["품번", "색상", "실판매", "판매비", "현재고", "추가생산", "총재고", "재고비", "1년실판매"]].copy()
-                show["판매비"] = (show["판매비"] * 100).round(1).astype(str) + "%"
-                show["재고비"] = (show["재고비"] * 100).round(1).astype(str) + "%"
-                st.dataframe(show, use_container_width=True, hide_index=True)
+        picked_sku = st.selectbox("품번 선택", options=all_skus, key="t3_set_sku")
+        core = db.extract_core_sku(picked_sku)
+        matched = repeat_wide[repeat_wide["품번"].astype(str).apply(db.extract_core_sku) == core].copy()
 
-                # 판매비와 재고비 괴리가 크면 불균형 신호 (브라 잘 팔리는데 팬티 재고만 쌓이는 등)
-                imbalance = (grp["판매비"] - grp["재고비"]).abs().max()
-                if imbalance > 0.15:
-                    st.caption(f"⚠️ 판매비-재고비 차이가 최대 {imbalance*100:.0f}%p — 세트 내 품번 간 재고 쏠림 가능성")
+        if matched["brand"].nunique() < 2:
+            st.warning(f"'{picked_sku}'(코어: {core})와 매칭되는 반대 브랜드 품번이 없습니다 - 단품으로 추정됩니다.")
 
+        show_cols = [c for c in [
+            "brand", "품번", "color", "current_stock",
+            "전년실매출_연합계", "전년실매출_최근3개월평균", "추가생산_합계",
+        ] if c in matched.columns]
+        st.dataframe(matched[show_cols], use_container_width=True, hide_index=True)
+
+        if matched["brand"].nunique() >= 2 and "전년실매출_연합계" in matched.columns and "current_stock" in matched.columns:
+            by_brand = matched.groupby("brand").agg(
+                총판매=("전년실매출_연합계", "sum"),
+                총재고=("current_stock", "sum"),
+            )
+            total_sales = by_brand["총판매"].sum()
+            total_stock = by_brand["총재고"].sum()
+            if total_sales > 0 and total_stock > 0:
+                by_brand["판매비"] = (by_brand["총판매"] / total_sales * 100).round(1)
+                by_brand["재고비"] = (by_brand["총재고"] / total_stock * 100).round(1)
+                st.dataframe(by_brand, use_container_width=True)
+                imbalance = (by_brand["판매비"] - by_brand["재고비"]).abs().max()
+                if imbalance > 15:
+                    st.caption(f"참고: 판매비-재고비 차이가 최대 {imbalance:.0f}%p - 세트 내 브랜드 간 재고 쏠림 가능성")
 
 # ===========================================================================
 # TAB 4 — 군별 실적 (FY26_주간_군별_실매출_현황 기반)
